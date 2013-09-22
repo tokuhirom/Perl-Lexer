@@ -85,5 +85,11 @@ Get a string notation of the type.
 
 =item $token->yylval() : B::OP|Int|Str
 
+Get a yylval. The type of yylval is determined by C<< $token->type >>.
+
+=item $token->yylval_svop() : SV
+
+Extract SV from yylval if yylval is C<B::SVOP>.
+
 =back
 
