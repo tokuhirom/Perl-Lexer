@@ -32,6 +32,18 @@ I want to tokenize perl5 code by perl5.
 
 Of course, this module uses Perl5's private APIs. I hope these APIs turn into public.
 
+If we can use lexer, we can write a source code analysis related things like Test::MinimumVersion, and other things.
+
+# WHAT API IS NEEDED FOR WRITING MODULES LIKE THIS.
+
+- Open the token informations for XS hackers.
+
+    Now, token name, type, and arguments informations are hidden at toke.c and perly.h.
+
+    I need to define \`PERL\_CORE\` for use it... It's too bad.
+
+    And, I take token\_type and debug\_tokens from toke.c.
+
 # METHODS
 
 - my $lexer = Perl::Lexer->new();

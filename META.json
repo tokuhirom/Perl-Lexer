@@ -52,5 +52,16 @@
       }
    },
    "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/tokuhirom/Perl-Lexer/issues"
+      },
+      "homepage" : "https://github.com/tokuhirom/Perl-Lexer",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/tokuhirom/Perl-Lexer.git",
+         "web" : "https://github.com/tokuhirom/Perl-Lexer"
+      }
+   },
    "version" : "0.01"
 }

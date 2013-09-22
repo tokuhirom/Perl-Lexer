@@ -51,4 +51,39 @@ sub yylval_svop {
 
 
 1;
+__END__
+
+=head1 NAME
+
+Perl::Lexer::Token - Token
+
+=head1 SYNOPSIS
+
+=over 4
+
+=item $token->inspect() : Str
+
+Stringify the token as human readable format.
+
+=item $token->name() :Str
+
+Get a token name.
+
+=item $token->type() :Int
+
+Get a token type. It's one of the following:
+
+    Perl::Lexer::TOKENTYPE_NONE()
+    Perl::Lexer::TOKENTYPE_IVAL()
+    Perl::Lexer::TOKENTYPE_OPNUM()
+    Perl::Lexer::TOKENTYPE_PVAL()
+    Perl::Lexer::TOKENTYPE_OPVAL()
+
+=item $token->type_str() :Int
+
+Get a string notation of the type.
+
+=item $token->yylval() : B::OP|Int|Str
+
+=back
 
