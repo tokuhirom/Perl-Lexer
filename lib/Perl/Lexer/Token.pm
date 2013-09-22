@@ -53,6 +53,8 @@ sub yylval_svop {
 1;
 __END__
 
+=for stopwords yylval
+
 =head1 NAME
 
 Perl::Lexer::Token - Token

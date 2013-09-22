@@ -23,7 +23,7 @@ Output is:
 
 __THIS LIBRARY IS WRITTEN FOR RESEARCHING PERL5 LEXER API. THIS MODULE USES PERL5 INTERNAL API. DO NOT USE THIS.__
 
-Perl::Lexer is a really hacky library for using Perl5 lexer as a library.
+Perl::Lexer is a really hackish library for using Perl5 lexer as a library.
 
 # MOTIVATION
 

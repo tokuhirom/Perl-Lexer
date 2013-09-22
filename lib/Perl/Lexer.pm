@@ -35,6 +35,8 @@ sub scan_string {
 4649;
 __END__
 
+=for stopwords hackish yylval tokenize
+
 =encoding utf-8
 
 =head1 NAME
@@ -62,7 +64,7 @@ Output is:
 
 B<THIS LIBRARY IS WRITTEN FOR RESEARCHING PERL5 LEXER API. THIS MODULE USES PERL5 INTERNAL API. DO NOT USE THIS.>
 
-Perl::Lexer is a really hacky library for using Perl5 lexer as a library.
+Perl::Lexer is a really hackish library for using Perl5 lexer as a library.
 
 =head1 MOTIVATION
 
