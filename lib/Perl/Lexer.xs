@@ -101,7 +101,6 @@ CODE:
     while (1) {
         int token = Perl_yylex(aTHX);
         if (token == 0) {
-            PerlIO_printf(PerlIO_stderr(), "token: %d\n", token);
             break;
         }
         /* PerlIO_printf(PerlIO_stderr(), "token: %d\n", token); */
