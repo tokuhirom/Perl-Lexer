@@ -1,14 +1,46 @@
 # NAME
 
-Perl::Lexer - It's new $module
+Perl::Lexer - Use Perl5 lexer as a library.
 
 # SYNOPSIS
 
+    use v5.18.0;
     use Perl::Lexer;
+
+    my $lexer = Perl::Lexer->new();
+    my @tokens = @{$lexer->scan_string('1+2')};
+    for (@tokens) {
+        say $_->inspect;
+    }
+
+Output is:
+
+    <Token: THING opval 1>
+    <Token: ADDOP opnum 63>
+    <Token: THING opval 2>
 
 # DESCRIPTION
 
-Perl::Lexer is ...
+__THIS LIBRARY IS WRITTEN FOR RESEARCHING PERL5 LEXER API. THIS MODULE USES PERL5 INTERNAL API. DO NOT USE THIS.__
+
+Perl::Lexer is a really hacky library for using Perl5 lexer as a library.
+
+# MOTIVATION
+
+The programming language provides lexer library for itself is pretty nice.
+I want to tokenize perl5 code by perl5.
+
+Of course, this module uses Perl5's private APIs. I hope these APIs turn into public.
+
+# METHODS
+
+- my $lexer = Perl::Lexer->new();
+
+    Create new Perl::Lexer object.
+
+- $lexer->scan\_string($code: Str) : ArrayRef\[Str\]
+
+    Tokenize perl5 code. This method returns arrayref of Perl::Lexer::Token.
 
 # LICENSE
 
