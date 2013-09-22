@@ -88,21 +88,23 @@ BOOT:
     newCONSTSUB(stash, "TOKENTYPE_OPVAL", newSViv(TOKENTYPE_OPVAL));
 
 void
-scan_string(self, src)
+scan_fh(self, rsfp)
     SV* self;
-    SV* src;
+    PerlIO *rsfp;
 CODE:
 {
     ENTER;
     SAVESPTR(PL_compcv);
     PL_compcv = PL_main_cv;
-    Perl_lex_start(aTHX_ src, NULL, 0);
+    Perl_lex_start(aTHX_ NULL, rsfp, 0);
     AV *result = newAV();
     while (1) {
         int token = Perl_yylex(aTHX);
         if (token == 0) {
+            PerlIO_printf(PerlIO_stderr(), "token: %d\n", token);
             break;
         }
+        /* PerlIO_printf(PerlIO_stderr(), "token: %d\n", token); */
 
         int i=0;
         while (debug_tokens[i].token != 0) {
@@ -121,10 +123,12 @@ CODE:
                     break;
                 case TOKENTYPE_OPVAL: {
                     OP *op = PL_parser->yylval.opval;
-                    SV *rv = newRV_noinc(newSViv(PTR2IV(op)));
-                    sv_bless(rv, gv_stashpv(b_op_class_name(aTHX_ op), 1));
-                    SvREADONLY_on(rv);
-                    av_push(row, rv);
+                    if (op != NULL) {
+                        SV *rv = newRV_noinc(newSViv(PTR2IV(op)));
+                        sv_bless(rv, gv_stashpv(b_op_class_name(aTHX_ op), 1));
+                        SvREADONLY_on(rv);
+                        av_push(row, rv);
+                    }
                     break;
                 }
                 }

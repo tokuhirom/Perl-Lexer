@@ -1,11 +1,20 @@
 #!/usr/bin/env perl
-use v5.18.0;
+use strict;
+use warnings;
 use Perl::Lexer;
 
-my $src = join '', <>;
+my $version;
+my $p = Getopt::Long::Parser->new(
+    config => [qw(posix_default no_ignore_case auto_help)]
+);
+$p->getoptions(
+    'e=s'       => \my $eval,
+);
 
 my $lexer = Perl::Lexer->new();
-my @tokens = @{$lexer->scan_string($src)};
+my @tokens = do {
+    @{$lexer->scan_fh(*STDIN)};
+};
 for (@tokens) {
-    say $_->inspect;
+    print $_->inspect, "\n";
 }

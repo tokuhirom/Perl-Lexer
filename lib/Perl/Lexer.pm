@@ -2,6 +2,7 @@ package Perl::Lexer;
 use 5.018001;
 use strict;
 use warnings;
+use B;
 
 our $VERSION = "0.01";
 
@@ -15,6 +16,8 @@ our @EXPORT = qw(
     TOKENTYPE_OPVAL
 );
 
+use Perl::Lexer::Token;
+
 use XSLoader;
 XSLoader::load(__PACKAGE__, $VERSION);
 
@@ -23,54 +26,13 @@ sub new {
     bless {}, $class;
 }
 
-package Perl::Lexer::Token;
-
-sub inspect {
-    my $self = shift;
-    my $ret = '<Token: ';
-    $ret .= $self->name . ' ' . lc($self->type_str);
-    if (UNIVERSAL::isa($self->yylval, 'B::SVOP')) {
-        $ret .= ' ' . $self->yylval_svop;
-    } else {
-        $ret .= ' ' . $self->yylval;
-    }
-    $ret .= '>';
-    return $ret;
+sub scan_string {
+    my ($self, $str) = @_;
+    open my $fh, '<', \$str;
+    $self->scan_fh($fh);
 }
 
-sub name {
-    my $self = shift;
-    _name($self->[0]);
-}
-
-sub type {
-    my $self = shift;
-    _type($self->[0]);
-}
-
-sub type_str {
-    my $type = shift->type;
-    +{
-        Perl::Lexer::TOKENTYPE_NONE()  => 'NONE',
-        Perl::Lexer::TOKENTYPE_IVAL()  => 'IVAL',
-        Perl::Lexer::TOKENTYPE_OPNUM() => 'OPNUM',
-        Perl::Lexer::TOKENTYPE_PVAL()  => 'PVAL',
-        Perl::Lexer::TOKENTYPE_OPVAL() => 'OPVAL',
-    }->{$type};
-}
-
-sub yylval {
-    my $self = shift;
-    return $self->[1];
-}
-
-sub yylval_svop {
-    my $self = shift;
-    Carp::croak("It's not SVOP") unless UNIVERSAL::isa($self->[1], 'B::SVOP');
-    return _yylval_svop($self->[1]);
-}
-
-1;
+4649;
 __END__
 
 =encoding utf-8
@@ -101,6 +63,27 @@ Output is:
 B<THIS LIBRARY IS WRITTEN FOR RESEARCHING PERL5 LEXER API. THIS MODULE USES PERL5 INTERNAL API. DO NOT USE THIS.>
 
 Perl::Lexer is a really hacky library for using Perl5 lexer as a library.
+
+=head1 MOTIVATION
+
+The programming language provides lexer library for itself is pretty nice.
+I want to tokenize perl5 code by perl5.
+
+Of course, this module uses Perl5's private APIs. I hope these APIs turn into public.
+
+=head1 METHODS
+
+=over 4
+
+=item my $lexer = Perl::Lexer->new();
+
+Create new Perl::Lexer object.
+
+=item $lexer->scan_string($code: Str) : ArrayRef[Str]
+
+Tokenize perl5 code. This method returns arrayref of Perl::Lexer::Token.
+
+=back
 
 =head1 LICENSE
 

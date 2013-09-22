@@ -2,7 +2,6 @@ use strict;
 use Test::More;
 
 use Perl::Lexer;
-use B;
 
 subtest '"5963"' => sub {
     my @tokens = @{Perl::Lexer->new->scan_string('5963')};
