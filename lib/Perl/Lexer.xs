@@ -13,7 +13,7 @@ extern "C" {
 
 #define NEED_newSVpvn_flags
 #include "ppport.h"
-#include "token_info.h"
+#include "gen/token_info_map.h"
 
 #define XS_STATE(type, x)     (INT2PTR(type, SvROK(x) ? SvIV(SvRV(x)) : SvIV(x)))
 

@@ -2,7 +2,7 @@ package Perl::Lexer::Token;
 use strict;
 use warnings;
 use utf8;
-use 5.018001;
+use 5.010000;
 
 sub inspect {
     my $self = shift;
