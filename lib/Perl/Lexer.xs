@@ -16,6 +16,9 @@ extern "C" {
 #include "gen/token_info_map.h"
 
 #define XS_STATE(type, x)     (INT2PTR(type, SvROK(x) ? SvIV(SvRV(x)) : SvIV(x)))
+#ifndef OP_CLASS
+#define OP_CLASS(o) PL_opargs[o->op_type] & OA_CLASS_MASK
+#endif
 
 /* Stolen from ext/B/B.c.
  * I hope Perl5 provide make_op_object() as public API!
