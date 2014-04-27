@@ -124,6 +124,8 @@
 #include "token_info-5.19.1.h"
 #elif PERL_VERSION == 19 && PERL_SUBVERSION == 10
 #include "token_info-5.19.10.h"
+#elif PERL_VERSION == 19 && PERL_SUBVERSION == 11
+#include "token_info-5.19.11.h"
 #elif PERL_VERSION == 19 && PERL_SUBVERSION == 2
 #include "token_info-5.19.2.h"
 #elif PERL_VERSION == 19 && PERL_SUBVERSION == 3
