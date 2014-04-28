@@ -34,6 +34,7 @@ mkdir $dst_dir unless -d $dst_dir;
 open my $map, '>', "$dst_dir/token_info_map.h";
 
 my %seen;
+my %prev;
 for my $version (@perl_versions) {
     next if $seen{$version}++;
     say "processing $version...";
@@ -54,6 +55,7 @@ for my $version (@perl_versions) {
         $tar->extract_file("perl-$version/$name", "$src_dir/$vname");
     }
 
+    my $perly = '';
     {
         my $src = "$src_dir/perly-$version.h";
         my $dst = "$dst_dir/perly-$version.h";
@@ -62,11 +64,13 @@ for my $version (@perl_versions) {
         while(<$in>) {
             next if /PERL_CORE|PERL_IN_TOKE_C/;
             print $out $_;
+            $perly .= $_;
         }
         close $in;
         close $out;
     }
 
+    my $token_info = '';
     {
         my $src = "$src_dir/toke-$version.c";
         my $dst = "$dst_dir/token_info-$version.h";
@@ -80,17 +84,33 @@ for my $version (@perl_versions) {
             }
             if ($flag) {
                 print $out $_;
+                $token_info .= $_;
                 $flag = 0 if /^\s*$/;
             }
         }
     }
 
     my ($revision, $major, $minor) = split /\./, $version;
+
+    my $include_version = $version;
+    if ($prev{perly} && $prev{perly} eq $perly &&
+        $prev{token_info} && $prev{token_info} eq $token_info &&
+        $minor  # should always keep 5.x.0 for clarity
+    ) {
+        unlink "$dst_dir/perly-$version.h";
+        unlink "$dst_dir/token_info-$version.h";
+        $include_version = $prev{version};
+    } else {
+        $prev{perly} = $perly;
+        $prev{token_info} = $token_info;
+        $prev{version} = $version;
+    }
+
     my $if = keys %seen > 1 ? "elif" : "if";
 
     print $map <<"MAP";
 #$if PERL_VERSION == $major && PERL_SUBVERSION == $minor
-#include "token_info-$version.h"
+#include "token_info-$include_version.h"
 MAP
 }
 
