@@ -8,7 +8,7 @@ use Archive::Tar;
 use version;
 
 # XXX: 5.8.8 and 5.8.9 also have debug_tokens.
-my $min_version = '5.010000';
+my $min_version = version->parse('5.010000');
 
 my $ua = HTTP::Tiny->new;
 
@@ -17,6 +17,12 @@ my @perl_versions;
     my $res = $ua->get("http://www.cpan.org/src/5.0/");
     die "Can't get perl versions" unless $res->{success};
     @perl_versions = $res->{content} =~ m!href="perl-(5\.\d+\.\d+).tar.gz"!g;
+    @perl_versions =
+        map {$_->[0]}
+        sort {$a->[1] <=> $b->[1]}
+        grep {$_->[1] >= $min_version}
+        map {[$_, version->parse($_)]}
+        @perl_versions;
 }
 
 my $src_dir = "$FindBin::Bin/src";
@@ -28,8 +34,7 @@ mkdir $dst_dir unless -d $dst_dir;
 open my $map, '>', "$dst_dir/token_info_map.h";
 
 my %seen;
-for my $version (sort @perl_versions) {
-    next if version->parse($version) < version->parse($min_version);
+for my $version (@perl_versions) {
     next if $seen{$version}++;
     say "downloading $version...";
     my $file = "$src_dir/perl-$version.tar.gz";
