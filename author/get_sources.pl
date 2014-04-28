@@ -114,4 +114,22 @@ for my $version (@perl_versions) {
 MAP
 }
 
+# fallback to the latest (so that we don't always need to rush everytime a new version of perl is released)
+if ($prev{perly} && $prev{token_info} && $prev{version}) {
+    {
+        open my $out, '>', "$dst_dir/perly-latest.h";
+        print $out $prev{perly};
+    }
+    {
+        open my $out, '>', "$dst_dir/token_info-latest.h";
+        say $out qq{#include "perly-latest.h"};
+        print $out $prev{token_info};
+    }
+    my ($revision, $major, $minor) = split /\./, $perl_versions[-1];
+    print $map <<"MAP";
+#elif PERL_VERSION > $major || (PERL_VERSION == $major && PERL_SUBVERSION > $minor)
+#include "token_info-latest.h"
+MAP
+}
+
 print $map "#endif\n";
