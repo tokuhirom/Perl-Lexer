@@ -2,6 +2,10 @@ Revision history for Perl extension Perl-Lexer
 
 {{$NEXT}}
 
+0.05 2014-04-28T08:14:28Z
+    - Supported 5.19.11
+    - Removed duplicated headers
+
 0.04 2014-04-16T07:22:44Z
     - Added OP_CLASS definition for perl < 5.12
 
