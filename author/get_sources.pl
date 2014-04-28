@@ -132,4 +132,8 @@ if ($prev{perly} && $prev{token_info} && $prev{version}) {
 MAP
 }
 
-print $map "#endif\n";
+print $map <<"MAP";
+#else
+#error "No support for this perl version"
+#endif
+MAP
