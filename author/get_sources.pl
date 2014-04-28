@@ -36,12 +36,15 @@ open my $map, '>', "$dst_dir/token_info_map.h";
 my %seen;
 for my $version (@perl_versions) {
     next if $seen{$version}++;
-    say "downloading $version...";
+    say "processing $version...";
     my $file = "$src_dir/perl-$version.tar.gz";
-    my $res = $ua->mirror("http://www.cpan.org/src/5.0/perl-$version.tar.gz", $file);
-    unless ($res->{success}) {
-        warn "Can't download $version";
-        next;
+    if (!-f $file) {
+        say "downloading $version...";
+        my $res = $ua->mirror("http://www.cpan.org/src/5.0/perl-$version.tar.gz", $file);
+        unless ($res->{success}) {
+            warn "Can't download $version";
+            next;
+        }
     }
     my $tar = Archive::Tar->new($file, 1);
 
