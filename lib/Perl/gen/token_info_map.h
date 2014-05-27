@@ -142,7 +142,9 @@
 #include "token_info-5.19.9.h"
 #elif PERL_VERSION == 19 && PERL_SUBVERSION == 11
 #include "token_info-5.19.9.h"
-#elif PERL_VERSION > 19 || (PERL_VERSION == 19 && PERL_SUBVERSION > 11)
+#elif PERL_VERSION == 20 && PERL_SUBVERSION == 0
+#include "token_info-5.20.0.h"
+#elif PERL_VERSION > 20 || (PERL_VERSION == 20 && PERL_SUBVERSION > 0)
 #include "token_info-latest.h"
 #else
 #error "No support for this perl version"
