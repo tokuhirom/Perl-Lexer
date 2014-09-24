@@ -2,6 +2,9 @@ Revision history for Perl extension Perl-Lexer
 
 {{$NEXT}}
 
+0.08 2014-09-24T05:22:09Z
+    - Supported 5.21.[234]
+
 0.07 2014-07-01T16:53:09Z
     - Supported 5.21.[01]
 
