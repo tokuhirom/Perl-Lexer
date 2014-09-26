@@ -118,6 +118,8 @@
 #include "token_info-5.18.0.h"
 #elif PERL_VERSION == 18 && PERL_SUBVERSION == 2
 #include "token_info-5.18.0.h"
+#elif PERL_VERSION == 18 && PERL_SUBVERSION == 3
+#include "token_info-5.18.0.h"
 #elif PERL_VERSION == 19 && PERL_SUBVERSION == 0
 #include "token_info-5.19.0.h"
 #elif PERL_VERSION == 19 && PERL_SUBVERSION == 1
