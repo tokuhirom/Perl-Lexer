@@ -14,14 +14,16 @@ my $ua = HTTP::Tiny->new;
 
 my @perl_versions;
 {
+    my %seen;
     my $res = $ua->get("http://www.cpan.org/src/5.0/");
     die "Can't get perl versions" unless $res->{success};
-    @perl_versions = $res->{content} =~ m!href="perl-(5\.\d+\.\d+).tar.gz"!g;
+    @perl_versions = $res->{content} =~ m!href="perl-(5\.\d+\.\d+(?:\-RC\d+)?).tar.gz"!g;
     @perl_versions =
         map {$_->[0]}
-        sort {$a->[1] <=> $b->[1]}
+        grep {not ($seen{$_->[1]}++)}
+        sort {$a->[1] <=> $b->[1] || $a->[0] cmp $b->[0]}
         grep {$_->[1] >= $min_version}
-        map {[$_, version->parse($_)]}
+        map {my $v = $_; $v =~ s/\-RC\d+$//; [$_, version->parse($v)]}
         @perl_versions;
 }
 
@@ -91,6 +93,7 @@ for my $version (@perl_versions) {
     }
 
     my ($revision, $major, $minor) = split /\./, $version;
+    $minor =~ s/\-RC\d+//;
 
     my $include_version = $version;
     if ($prev{perly} && $prev{perly} eq $perly &&
