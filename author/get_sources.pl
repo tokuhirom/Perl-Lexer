@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use FindBin;
 use HTTP::Tiny;
+use JSON::PP;
 use Archive::Tar;
 use version;
 
@@ -12,19 +13,27 @@ my $min_version = version->parse('5.010000');
 
 my $ua = HTTP::Tiny->new;
 
-my @perl_versions;
+my @perls;
 {
     my %seen;
-    my $res = $ua->get("http://www.cpan.org/src/5.0/");
+    my $res = $ua->get("http://api.metacpan.org/v0/release/_search?q=distribution:perl&fields=download_url,date&size=500&sort=date:desc");
     die "Can't get perl versions" unless $res->{success};
-    @perl_versions = $res->{content} =~ m!href="perl-(5\.\d+\.\d+(?:\-RC\d+)?).tar.gz"!g;
-    @perl_versions =
-        map {$_->[0]}
+    @perls =
+        map {+{version => $_->[0], url => $_->[2]}}
         grep {not ($seen{$_->[1]}++)}
         sort {$a->[1] <=> $b->[1] || $a->[0] cmp $b->[0]}
-        grep {$_->[1] >= $min_version}
-        map {my $v = $_; $v =~ s/\-RC\d+$//; [$_, version->parse($v)]}
-        @perl_versions;
+        grep {defined $_ && $_->[1] >= $min_version}
+        map {
+            my $url = $_->{fields}{download_url};
+            $url =~ s/\.bz2$/\.gz/;
+            my $ret;
+            if (my ($version) = $url =~ /perl-(5\.\d+\.\d+(?:\-RC\d+)?)\.tar\.gz$/) {
+                my $v = $version; $v =~ s/\-RC\d+$//;
+                $ret = [$version, version->parse($v), $url];
+            }
+            $ret;
+        }
+        @{ decode_json($res->{content})->{hits}{hits} || [] };
 }
 
 my $src_dir = "$FindBin::Bin/src";
@@ -37,13 +46,14 @@ open my $map, '>', "$dst_dir/token_info_map.h";
 
 my %seen;
 my %prev;
-for my $version (@perl_versions) {
+for my $perl (@perls) {
+    my $version = $perl->{version};
     next if $seen{$version}++;
     say "processing $version...";
     my $file = "$src_dir/perl-$version.tar.gz";
     if (!-f $file) {
         say "downloading $version...";
-        my $res = $ua->mirror("http://www.cpan.org/src/5.0/perl-$version.tar.gz", $file);
+        my $res = $ua->mirror($perl->{url}, $file);
         unless ($res->{success}) {
             warn "Can't download $version";
             next;
@@ -128,7 +138,7 @@ if ($prev{perly} && $prev{token_info} && $prev{version}) {
         say $out qq{#include "perly-latest.h"};
         print $out $prev{token_info};
     }
-    my ($revision, $major, $minor) = split /\./, $perl_versions[-1];
+    my ($revision, $major, $minor) = split /\./, $perls[-1]->{version};
     print $map <<"MAP";
 #elif PERL_VERSION > $major || (PERL_VERSION == $major && PERL_SUBVERSION > $minor)
 #include "token_info-latest.h"
