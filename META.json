@@ -63,7 +63,7 @@
          "web" : "https://github.com/tokuhirom/Perl-Lexer"
       }
    },
-   "version" : "0.09",
+   "version" : "0.10",
    "x_contributors" : [
       "Kenichi Ishigaki <ishigaki@cpan.org>"
    ]
