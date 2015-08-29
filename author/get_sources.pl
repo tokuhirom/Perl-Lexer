@@ -105,6 +105,8 @@ for my $perl (@perls) {
     my ($revision, $major, $minor) = split /\./, $version;
     $minor =~ s/\-RC\d+//;
 
+    my $if = keys %seen > 1 ? "elif" : "if";
+
     my $include_version = $version;
     if ($prev{perly} && $prev{perly} eq $perly &&
         $prev{token_info} && $prev{token_info} eq $token_info &&
@@ -114,12 +116,19 @@ for my $perl (@perls) {
         unlink "$dst_dir/token_info-$version.h";
         $include_version = $prev{version};
     } else {
+        # token_info for the stable perls should be the same
+        # (fallback for maint releases)
+        if ($major % 2 && !$minor) {
+            print $map <<"MAP";
+#$if PERL_VERSION == @{[$major - 1]}
+#include "token_info-$prev{version}.h"
+MAP
+        }
+
         $prev{perly} = $perly;
         $prev{token_info} = $token_info;
         $prev{version} = $version;
     }
-
-    my $if = keys %seen > 1 ? "elif" : "if";
 
     print $map <<"MAP";
 #$if PERL_VERSION == $major && PERL_SUBVERSION == $minor

@@ -2,6 +2,8 @@
 #include "token_info-5.10.0.h"
 #elif PERL_VERSION == 10 && PERL_SUBVERSION == 1
 #include "token_info-5.10.0.h"
+#elif PERL_VERSION == 10
+#include "token_info-5.10.0.h"
 #elif PERL_VERSION == 11 && PERL_SUBVERSION == 0
 #include "token_info-5.11.0.h"
 #elif PERL_VERSION == 11 && PERL_SUBVERSION == 1
@@ -25,6 +27,8 @@
 #elif PERL_VERSION == 12 && PERL_SUBVERSION == 4
 #include "token_info-5.12.0.h"
 #elif PERL_VERSION == 12 && PERL_SUBVERSION == 5
+#include "token_info-5.12.0.h"
+#elif PERL_VERSION == 12
 #include "token_info-5.12.0.h"
 #elif PERL_VERSION == 13 && PERL_SUBVERSION == 0
 #include "token_info-5.13.0.h"
@@ -60,6 +64,8 @@
 #include "token_info-5.14.0.h"
 #elif PERL_VERSION == 14 && PERL_SUBVERSION == 4
 #include "token_info-5.14.0.h"
+#elif PERL_VERSION == 14
+#include "token_info-5.14.0.h"
 #elif PERL_VERSION == 15 && PERL_SUBVERSION == 0
 #include "token_info-5.15.0.h"
 #elif PERL_VERSION == 15 && PERL_SUBVERSION == 1
@@ -87,6 +93,8 @@
 #elif PERL_VERSION == 16 && PERL_SUBVERSION == 2
 #include "token_info-5.16.0.h"
 #elif PERL_VERSION == 16 && PERL_SUBVERSION == 3
+#include "token_info-5.16.0.h"
+#elif PERL_VERSION == 16
 #include "token_info-5.16.0.h"
 #elif PERL_VERSION == 17 && PERL_SUBVERSION == 0
 #include "token_info-5.17.0.h"
@@ -122,6 +130,8 @@
 #include "token_info-5.18.0.h"
 #elif PERL_VERSION == 18 && PERL_SUBVERSION == 4
 #include "token_info-5.18.0.h"
+#elif PERL_VERSION == 18
+#include "token_info-5.18.0.h"
 #elif PERL_VERSION == 19 && PERL_SUBVERSION == 0
 #include "token_info-5.19.0.h"
 #elif PERL_VERSION == 19 && PERL_SUBVERSION == 1
@@ -152,6 +162,10 @@
 #include "token_info-5.20.0.h"
 #elif PERL_VERSION == 20 && PERL_SUBVERSION == 2
 #include "token_info-5.20.0.h"
+#elif PERL_VERSION == 20 && PERL_SUBVERSION == 3
+#include "token_info-5.20.0.h"
+#elif PERL_VERSION == 20
+#include "token_info-5.20.0.h"
 #elif PERL_VERSION == 21 && PERL_SUBVERSION == 0
 #include "token_info-5.21.0.h"
 #elif PERL_VERSION == 21 && PERL_SUBVERSION == 1
@@ -178,11 +192,15 @@
 #include "token_info-5.21.9.h"
 #elif PERL_VERSION == 22 && PERL_SUBVERSION == 0
 #include "token_info-5.22.0.h"
+#elif PERL_VERSION == 22
+#include "token_info-5.22.0.h"
 #elif PERL_VERSION == 23 && PERL_SUBVERSION == 0
 #include "token_info-5.23.0.h"
 #elif PERL_VERSION == 23 && PERL_SUBVERSION == 1
 #include "token_info-5.23.0.h"
-#elif PERL_VERSION > 23 || (PERL_VERSION == 23 && PERL_SUBVERSION > 1)
+#elif PERL_VERSION == 23 && PERL_SUBVERSION == 2
+#include "token_info-5.23.0.h"
+#elif PERL_VERSION > 23 || (PERL_VERSION == 23 && PERL_SUBVERSION > 2)
 #include "token_info-latest.h"
 #else
 #error "No support for this perl version"
