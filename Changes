@@ -2,6 +2,10 @@ Revision history for Perl extension Perl-Lexer
 
 {{$NEXT}}
 
+0.17 2016-02-21T00:25:10Z
+    - Supported 5.23.[78]
+    - Added some undeclared tokens (mainly "require" for older perls)
+
 0.16 2015-12-23T07:36:18Z
     - Supported 5.23.[456] and 5.22.1
 
