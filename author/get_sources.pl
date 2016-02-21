@@ -68,15 +68,29 @@ for my $perl (@perls) {
     }
 
     my $perly = '';
+    my %yytokentype;
     {
         my $src = "$src_dir/perly-$version.h";
         my $dst = "$dst_dir/perly-$version.h";
         open my $in, '<', $src;
         open my $out, '>', $dst;
+        my $in_yytokentype;
         while(<$in>) {
             next if /PERL_CORE|PERL_IN_TOKE_C/;
             print $out $_;
             $perly .= $_;
+            if (/enum yytokentype/) {
+                $in_yytokentype = 1;
+                next;
+            }
+            if ($in_yytokentype) {
+                if (/\}/) {
+                    $in_yytokentype = 0;
+                    next;
+                }
+                my ($token, $value) = /\s+([A-Z0-9_]+)\s*=\s*(\d+)/;
+                $yytokentype{$token} = $value;
+            }
         }
         close $in;
         close $out;
@@ -95,6 +109,18 @@ for my $perl (@perls) {
                 $flag = 1;
             }
             if ($flag) {
+                if (/\s*\{\s*([A-Z0-9_]+),/) {
+                    my $token = $1;
+                    $yytokentype{$token} = 0 if exists $yytokentype{$token};
+                }
+                if (/\s*\{\s*0,/) {
+                    # add undeclared tokens
+                    print $out "    /* added by Perl::Lexer */\n";
+                    for my $token (sort {$yytokentype{$a} <=> $yytokentype{$b}} grep {$yytokentype{$_}} keys %yytokentype) {
+                        print $out qq/    { $token, TOKENTYPE_OPNUM, "$token" },\n/;
+                        # print "added $token to token_info\n";
+                    }
+                }
                 print $out $_;
                 $token_info .= $_;
                 $flag = 0 if /^\s*$/;

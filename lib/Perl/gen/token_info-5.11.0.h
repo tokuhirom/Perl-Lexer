@@ -80,6 +80,10 @@ static struct debug_tokens {
     { WHILE,		TOKENTYPE_IVAL,		"WHILE" },
     { WORD,		TOKENTYPE_OPVAL,	"WORD" },
     { YADAYADA,		TOKENTYPE_IVAL,		"YADAYADA" },
+    /* added by Perl::Lexer */
+    { REQUIRE, TOKENTYPE_OPNUM, "REQUIRE" },
+    { PREC_LOW, TOKENTYPE_OPNUM, "PREC_LOW" },
+    { PEG, TOKENTYPE_OPNUM, "PEG" },
     { 0,		TOKENTYPE_NONE,		NULL }
 };
 
