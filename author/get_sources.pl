@@ -19,7 +19,7 @@ my @perls;
     my $res = $ua->get("http://api.metacpan.org/v0/release/_search?q=distribution:perl&fields=download_url,date&size=500&sort=date:desc");
     die "Can't get perl versions" unless $res->{success};
     @perls =
-        map {+{version => $_->[0], url => $_->[2]}}
+        map {+{version => $_->[0], url => $_->[2], canon_version => $_->[3]}}
         grep {not ($seen{$_->[1]}++)}
         sort {$a->[1] <=> $b->[1] || $a->[0] cmp $b->[0]}
         grep {defined $_ && $_->[1] >= $min_version}
@@ -29,7 +29,7 @@ my @perls;
             my $ret;
             if (my ($version) = $url =~ /perl-(5\.\d+\.\d+(?:\-RC\d+)?)\.tar\.gz$/) {
                 my $v = $version; $v =~ s/\-RC\d+$//;
-                $ret = [$version, version->parse($v), $url];
+                $ret = [$version, version->parse($v), $url, $v];
             }
             $ret;
         }
@@ -48,6 +48,7 @@ my %seen;
 my %prev;
 for my $perl (@perls) {
     my $version = $perl->{version};
+    my $canon_version = $perl->{canon_version};
     next if $seen{$version}++;
     say "processing $version...";
     my $file = "$src_dir/perl-$version.tar.gz";
@@ -62,7 +63,7 @@ for my $perl (@perls) {
     my $tar = Archive::Tar->new($file, 1);
 
     for my $name (qw/perly.h toke.c/) {
-        (my $vname = $name) =~ s/\./-$version./;
+        (my $vname = $name) =~ s/\./-$canon_version./;
         unlink "$src_dir/$vname" if -f "$src_dir/$vname";
         $tar->extract_file("perl-$version/$name", "$src_dir/$vname");
     }
@@ -70,8 +71,8 @@ for my $perl (@perls) {
     my $perly = '';
     my %yytokentype;
     {
-        my $src = "$src_dir/perly-$version.h";
-        my $dst = "$dst_dir/perly-$version.h";
+        my $src = "$src_dir/perly-$canon_version.h";
+        my $dst = "$dst_dir/perly-$canon_version.h";
         open my $in, '<', $src;
         open my $out, '>', $dst;
         my $in_yytokentype;
@@ -98,11 +99,11 @@ for my $perl (@perls) {
 
     my $token_info = '';
     {
-        my $src = "$src_dir/toke-$version.c";
-        my $dst = "$dst_dir/token_info-$version.h";
+        my $src = "$src_dir/toke-$canon_version.c";
+        my $dst = "$dst_dir/token_info-$canon_version.h";
         open my $in, '<', $src;
         open my $out, '>', $dst;
-        say $out qq{#include "perly-$version.h"};
+        say $out qq{#include "perly-$canon_version.h"};
         my $flag;
         while(<$in>) {
             if (/^(?:enum token_type|static struct debug_token)/) {
@@ -128,18 +129,17 @@ for my $perl (@perls) {
         }
     }
 
-    my ($revision, $major, $minor) = split /\./, $version;
-    $minor =~ s/\-RC\d+//;
+    my ($revision, $major, $minor) = split /\./, $canon_version;
 
     my $if = keys %seen > 1 ? "elif" : "if";
 
-    my $include_version = $version;
+    my $include_version = $canon_version;
     if ($prev{perly} && $prev{perly} eq $perly &&
         $prev{token_info} && $prev{token_info} eq $token_info &&
         $minor  # should always keep 5.x.0 for clarity
     ) {
-        unlink "$dst_dir/perly-$version.h";
-        unlink "$dst_dir/token_info-$version.h";
+        unlink "$dst_dir/perly-$canon_version.h";
+        unlink "$dst_dir/token_info-$canon_version.h";
         $include_version = $prev{version};
     } else {
         # token_info for the stable perls should be the same
@@ -153,7 +153,7 @@ MAP
 
         $prev{perly} = $perly;
         $prev{token_info} = $token_info;
-        $prev{version} = $version;
+        $prev{version} = $canon_version;
     }
 
     print $map <<"MAP";
@@ -173,7 +173,7 @@ if ($prev{perly} && $prev{token_info} && $prev{version}) {
         say $out qq{#include "perly-latest.h"};
         print $out $prev{token_info};
     }
-    my ($revision, $major, $minor) = split /\./, $perls[-1]->{version};
+    my ($revision, $major, $minor) = split /\./, $perls[-1]->{canon_version};
     print $map <<"MAP";
 #elif PERL_VERSION > $major || (PERL_VERSION == $major && PERL_SUBVERSION > $minor)
 #include "token_info-latest.h"
