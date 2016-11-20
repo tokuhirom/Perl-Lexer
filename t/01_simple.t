@@ -26,14 +26,14 @@ subtest 'use Foo 0.01' => sub {
 
     subtest 'second' => sub {
         isa_ok $tokens[1], 'Perl::Lexer::Token';
-        is $tokens[1]->name,   'WORD';
+        like $tokens[1]->name,   qr/\A(?:BARE)?WORD\z/;
         is $tokens[1]->type,   TOKENTYPE_OPVAL;
         is $tokens[1]->yylval_svop, '0.01';
     };
 
     subtest 'third' => sub {
         isa_ok $tokens[2], 'Perl::Lexer::Token';
-        is $tokens[2]->name,   'WORD';
+        like $tokens[2]->name,   qr/\A(?:BARE)?WORD\z/;
         is $tokens[2]->type,   TOKENTYPE_OPVAL;
         is $tokens[2]->yylval_svop, 'Foo';
     };
