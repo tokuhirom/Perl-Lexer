@@ -1,4 +1,4 @@
-#include "perly-latest.h"
+#include "perly-5.25.6.h"
 enum token_type {
     TOKENTYPE_NONE,
     TOKENTYPE_IVAL,
@@ -86,6 +86,14 @@ static struct debug_tokens {
     { WHILE,		TOKENTYPE_IVAL,		"WHILE" },
     { BAREWORD,		TOKENTYPE_OPVAL,	"BAREWORD" },
     { YADAYADA,		TOKENTYPE_IVAL,		"YADAYADA" },
+    /* added by Perl::Lexer */
+    { GRAMPROG, TOKENTYPE_OPNUM, "GRAMPROG" },
+    { GRAMEXPR, TOKENTYPE_OPNUM, "GRAMEXPR" },
+    { GRAMBLOCK, TOKENTYPE_OPNUM, "GRAMBLOCK" },
+    { GRAMBARESTMT, TOKENTYPE_OPNUM, "GRAMBARESTMT" },
+    { GRAMFULLSTMT, TOKENTYPE_OPNUM, "GRAMFULLSTMT" },
+    { GRAMSTMTSEQ, TOKENTYPE_OPNUM, "GRAMSTMTSEQ" },
+    { PREC_LOW, TOKENTYPE_OPNUM, "PREC_LOW" },
     { 0,		TOKENTYPE_NONE,		NULL }
 };
 
