@@ -89,8 +89,10 @@ for my $perl (@perls) {
                     $in_yytokentype = 0;
                     next;
                 }
-                my ($token, $value) = /\s+([A-Z0-9_]+)\s*=\s*(\d+)/;
-                $yytokentype{$token} = $value;
+                if (/\s+([A-Z0-9_]+)\s*=\s*(\d+)/) {
+                    my ($token, $value) = ($1, $2);
+                    $yytokentype{$token} = $value;
+                }
             }
         }
         close $in;
