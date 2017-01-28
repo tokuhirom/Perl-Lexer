@@ -10,7 +10,7 @@
    ],
    "meta-spec" : {
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
-      "version" : "2"
+      "version" : 2
    },
    "name" : "Perl-Lexer",
    "no_index" : {
@@ -64,7 +64,7 @@
          "web" : "https://github.com/tokuhirom/Perl-Lexer"
       }
    },
-   "version" : "0.21",
+   "version" : "0.22",
    "x_contributors" : [
       "Syohei YOSHIDA <syohex@gmail.com>",
       "Kenichi Ishigaki <charsbar@users.noreply.github.com>",

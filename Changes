@@ -2,6 +2,9 @@ Revision history for Perl extension Perl-Lexer
 
 {{$NEXT}}
 
+0.22 2017-01-28T06:24:01Z
+    - Support 5.25.[789]
+
 0.21 2016-11-20T15:16:07Z
     - Fixed a test for 5.25.3+ (SREZIC++)
 

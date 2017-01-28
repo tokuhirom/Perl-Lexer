@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use B;
 
-our $VERSION = "0.21";
+our $VERSION = "0.22";
 
 use parent qw(Exporter);
 
