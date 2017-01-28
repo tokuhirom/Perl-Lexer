@@ -1,4 +1,4 @@
-#include "perly-5.19.4.h"
+#include "perly-5.25.8.h"
 enum token_type {
     TOKENTYPE_NONE,
     TOKENTYPE_IVAL,
@@ -59,10 +59,10 @@ static struct debug_tokens {
     { OROP,		TOKENTYPE_IVAL,		"OROP" },
     { OROR,		TOKENTYPE_NONE,		"OROR" },
     { PACKAGE,		TOKENTYPE_NONE,		"PACKAGE" },
-    { PEG,		TOKENTYPE_NONE,		"PEG" },
     { PLUGEXPR,		TOKENTYPE_OPVAL,	"PLUGEXPR" },
     { PLUGSTMT,		TOKENTYPE_OPVAL,	"PLUGSTMT" },
     { PMFUNC,		TOKENTYPE_OPVAL,	"PMFUNC" },
+    { POSTJOIN,		TOKENTYPE_NONE,		"POSTJOIN" },
     { POSTDEC,		TOKENTYPE_NONE,		"POSTDEC" },
     { POSTINC,		TOKENTYPE_NONE,		"POSTINC" },
     { POWOP,		TOKENTYPE_OPNUM,	"POWOP" },
@@ -84,7 +84,7 @@ static struct debug_tokens {
     { USE,		TOKENTYPE_IVAL,		"USE" },
     { WHEN,		TOKENTYPE_IVAL,		"WHEN" },
     { WHILE,		TOKENTYPE_IVAL,		"WHILE" },
-    { WORD,		TOKENTYPE_OPVAL,	"WORD" },
+    { BAREWORD,		TOKENTYPE_OPVAL,	"BAREWORD" },
     { YADAYADA,		TOKENTYPE_IVAL,		"YADAYADA" },
     /* added by Perl::Lexer */
     { GRAMPROG, TOKENTYPE_OPNUM, "GRAMPROG" },
