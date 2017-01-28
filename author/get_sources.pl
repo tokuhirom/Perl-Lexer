@@ -95,6 +95,7 @@ for my $perl (@perls) {
                 }
             }
         }
+        $perly =~ s!/* Generated from:.+? */!!s;
         close $in;
         close $out;
     }
