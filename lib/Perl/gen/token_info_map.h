@@ -292,7 +292,13 @@
 #include "token_info-5.27.10.h"
 #elif PERL_VERSION == 27 && PERL_SUBVERSION == 11
 #include "token_info-5.27.10.h"
-#elif PERL_VERSION > 27 || (PERL_VERSION == 27 && PERL_SUBVERSION > 11)
+#elif PERL_VERSION == 28 && PERL_SUBVERSION == 0
+#include "token_info-5.28.0.h"
+#elif PERL_VERSION == 28
+#include "token_info-5.28.0.h"
+#elif PERL_VERSION == 29 && PERL_SUBVERSION == 0
+#include "token_info-5.29.0.h"
+#elif PERL_VERSION > 29 || (PERL_VERSION == 29 && PERL_SUBVERSION > 0)
 #include "token_info-latest.h"
 #else
 #error "No support for this perl version"
