@@ -187,4 +187,7 @@ typedef union YYSTYPE YYSTYPE;
 int yyparse (void);
 
 
-
+/* Generated from:
+ * 4d7581de6482210c9b2f3302b589173c8d8c0a88724cc58b659ca9dcd2a35761 perly.y
+ * 0947213b55d0ed11693554bea04987e886cf285f5c14cf9075fa1e7acc3f4061 regen_perly.pl
+ * ex: set ro: */
