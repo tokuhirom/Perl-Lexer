@@ -184,4 +184,7 @@ union YYSTYPE
 int yyparse (void);
 
 
-
+/* Generated from:
+ * e762043bfa8c11d38e46b8759b544243dd0b1dee698344186c06df7dd91ec5ed perly.y
+ * 0947213b55d0ed11693554bea04987e886cf285f5c14cf9075fa1e7acc3f4061 regen_perly.pl
+ * ex: set ro: */
