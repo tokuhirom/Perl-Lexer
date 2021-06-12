@@ -4,7 +4,7 @@
       "Tokuhiro Matsuno <tokuhirom@gmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v3.1.5, CPAN::Meta::Converter version 2.150010",
+   "generated_by" : "Minilla/v3.1.12, CPAN::Meta::Converter version 2.150010",
    "license" : [
       "perl_5"
    ],
@@ -64,12 +64,12 @@
          "web" : "https://github.com/tokuhirom/Perl-Lexer"
       }
    },
-   "version" : "0.32",
+   "version" : "0.33",
    "x_contributors" : [
       "Kenichi Ishigaki <charsbar@users.noreply.github.com>",
       "Kenichi Ishigaki <ishigaki@cpan.org>",
       "Syohei YOSHIDA <syohex@gmail.com>"
    ],
-   "x_serialization_backend" : "JSON::PP version 4.00",
+   "x_serialization_backend" : "JSON::PP version 4.05",
    "x_static_install" : 0
 }
