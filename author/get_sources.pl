@@ -147,7 +147,12 @@ for my $perl (@perls) {
                         # print "added $token to token_info\n";
                     }
                 }
-                print $out $_;
+                if (/DEBUG_TOKEN\s*\((\w+),\s*(\w+)\)\s*,/) {
+                    my ($type, $name) = ($1, $2);
+                    print $out qq/    { $name, TOKENTYPE_$type, "$name" },\n/;
+                } else {
+                    print $out $_;
+                }
                 $token_info .= $_;
                 $flag = 0 if /^\s*$/;
             }
