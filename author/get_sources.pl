@@ -23,7 +23,7 @@ my @perls;
 {
     my %seen;
     my $res = $ua->get($api_url);
-    die "Can't get perl versions" unless $res->{success};
+    die "Can't get perl versions: ".encode_json($res) unless $res->{success};
     @perls =
         map {+{version => $_->[0], url => $_->[2], canon_version => $_->[3]}}
         grep {not ($seen{$_->[1]}++)}
