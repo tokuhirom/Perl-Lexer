@@ -1,7 +1,7 @@
 requires 'perl', '5.010000';
 requires 'parent';
 
-on 'build' => sub {
+on 'configure' => sub {
     require 'Module::Build::Tiny', '0.035';
 };
 
