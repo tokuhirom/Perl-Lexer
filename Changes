@@ -2,6 +2,9 @@ Revision history for Perl extension Perl-Lexer
 
 {{$NEXT}}
 
+0.35 2021-07-05T04:11:52Z
+    - Fix test condition for 5.32.1
+
 0.34 2021-07-03T20:24:08Z
     - Fix compilation errors with 5.34.0 (SREZIC++, SYOHEX++)
 
