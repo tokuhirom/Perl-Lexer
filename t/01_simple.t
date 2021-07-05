@@ -3,7 +3,7 @@ use Test::More;
 
 use Perl::Lexer;
 
-my $has_debug_token = $^V > v5.32 ? 1 : 0;
+my $has_debug_token = $^V >= v5.33.6 ? 1 : 0;
 
 subtest '"5963"' => sub {
     my @tokens = @{Perl::Lexer->new->scan_string('5963')};
