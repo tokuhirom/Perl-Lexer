@@ -64,12 +64,12 @@
          "web" : "https://github.com/tokuhirom/Perl-Lexer"
       }
    },
-   "version" : "0.35",
+   "version" : "0.36",
    "x_contributors" : [
       "Kenichi Ishigaki <charsbar@users.noreply.github.com>",
       "Kenichi Ishigaki <ishigaki@cpan.org>",
       "Syohei YOSHIDA <syohex@gmail.com>"
    ],
-   "x_serialization_backend" : "JSON::PP version 4.05",
+   "x_serialization_backend" : "JSON::PP version 4.12",
    "x_static_install" : 0
 }
