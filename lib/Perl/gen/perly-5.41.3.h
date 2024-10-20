@@ -4,13 +4,13 @@
    Any changes made here will be lost!
  */
 
-#define PERL_BISON_VERSION  30008
+#define PERL_BISON_VERSION  30007
 
-/* A Bison parser, made by GNU Bison 3.8.2.  */
+/* A Bison parser, made by GNU Bison 3.7.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2021 Free Software Foundation,
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2020 Free Software Foundation,
    Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -230,9 +230,10 @@ typedef union YYSTYPE YYSTYPE;
 
 
 
-
 int yyparse (void);
 
 
-
-
+/* Generated from:
+ * 9fc11f4af92f701d8d7909a9cd9dc52e01098c42c2504fb84c15e1d1e72f4803 perly.y
+ * acf1cbfd2545faeaaa58b1cf0cf9d7f98b5be0752eb7a54528ef904a9e2e1ca7 regen_perly.pl
+ * ex: set ro ft=c: */
