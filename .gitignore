@@ -28,3 +28,5 @@ lib/Perl/Lexer.c
 !lib/Perl/ppport.h
 
 /author/src
+_build_params
+/temp/
